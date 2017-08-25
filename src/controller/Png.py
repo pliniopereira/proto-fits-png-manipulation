@@ -9,5 +9,6 @@ def return_info(file_name):
         for keys, values in dictionary.items():
             print(str(keys) + ": " + str(values))
         image.show
+        print("\n\n")
     except Exception as e:
         print(e)

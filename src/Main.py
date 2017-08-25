@@ -4,14 +4,14 @@ from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QGroupBox, QMessageBox
 
-from src.controller import Fits
+from src.controller import Fit
 from src.controller import Png
 from src.layout.Layout import set_hbox, set_lvbox
 
 
-class ProtoFitsHeaders(QWidget):
+class ProtoFitHeaders(QWidget):
     def __init__(self, parent=None):
-        super(ProtoFitsHeaders, self).__init__(parent)
+        super(ProtoFitHeaders, self).__init__(parent)
 
         self.info_1 = None
         self.info_2 = None
@@ -19,7 +19,7 @@ class ProtoFitsHeaders(QWidget):
 
         self.btn_select_image = None
         self.btn_show_info_png = None
-        self.btn_show_info_fits = None
+        self.btn_3 = None
         self.btn_4 = None
 
         self.lImagesName = None
@@ -41,7 +41,7 @@ class ProtoFitsHeaders(QWidget):
         self.show()
 
     def create_group(self):
-        group_box = QGroupBox("&Fits and Png Manipulation")
+        group_box = QGroupBox("&Fit and Png Manipulation")
 
         self.info_1 = QtWidgets.QLabel("info_1", self)
         self.info_1.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignLeft)
@@ -58,17 +58,20 @@ class ProtoFitsHeaders(QWidget):
 
         self.btn_select_image = QtWidgets.QPushButton('Open Image', self)
 
-        self.btn_show_info_png = QtWidgets.QPushButton('Show Infos Png', self)
+        self.btn_show_info_png = QtWidgets.QPushButton('Show Header Info', self)
 
-        self.btn_show_info_fits = QtWidgets.QPushButton('Show Infos Fits', self)
+        self.btn_3 = QtWidgets.QPushButton(u'btn_3', self)
+        self.btn_3.setMaximumWidth(50)
+
         self.btn_4 = QtWidgets.QPushButton('btn_4', self)
+        self.btn_4.setMaximumWidth(50)
 
         group_box.setLayout(set_lvbox(set_hbox(self.info_1),
                                       set_hbox(self.info_2),
                                       set_hbox(self.info_3),
                                       set_hbox(self.lImagesName, self.eImagesName, self.btn_select_image),
                                       set_hbox(self.btn_show_info_png),
-                                      set_hbox(self.btn_show_info_fits),
+                                      set_hbox(self.btn_3),
                                       set_hbox(self.btn_4)))
         return group_box
 
@@ -95,28 +98,31 @@ class ProtoFitsHeaders(QWidget):
         self.btn_select_image.clicked.connect(self.open_image)
         self.btn_show_info_png.clicked.connect(self.show_info_headers)
 
-        self.btn_show_info_fits.clicked.connect(self.func_3)
+        self.btn_3.clicked.connect(self.func_3)
         self.btn_4.clicked.connect(self.func_4)
 
     def open_image(self):
         try:
             image_name = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Image')
             image_name = str(image_name[0])
-            self.eImagesName.setText(image_name)
             self.image_name = image_name
+            self.eImagesName.setText(image_name)
         except Exception as e:
             print(e)
 
     def show_info_headers(self):
-        Png.return_info(self.image_name)
-
+        if self.image_name[-3:] == 'png':
+            Png.return_info(self.image_name)
+        else:
+            Fit.return_info(self.image_name)
+            
     def func_3(self):
-        Fits.return_info(self.image_name)
+        pass
 
     def func_4(self):
         pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ProtoFitsHeaders()
+    ex = ProtoFitHeaders()
     sys.exit(app.exec_())

@@ -8,6 +8,6 @@ def return_info(file_name):
         prihdr = image[0].header
         for keys, values in prihdr.items():
             print(str(keys) + ": " + str(values))
-        image.show()
+        print("\n\n")
     except Exception as e:
         print(e)
