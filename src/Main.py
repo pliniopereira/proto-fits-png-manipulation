@@ -4,7 +4,7 @@ import sys
 
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, Qgroup_box, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QGroupBox, QMessageBox
 
 from src.layout.Layout import set_hbox, set_lvbox
 
@@ -31,12 +31,12 @@ class ProtoFitsHeaders(QWidget):
 
         self.button_settings()
 
-        self.setWindowTitle("Proto - CCD")
+        self.setWindowTitle("Proto - Fit and png Headers")
         self.resize(60, 60)
         self.show()
 
     def create_group(self):
-        group_box = Qgroup_box("&Fits Manipulation")
+        group_box = QGroupBox("&Fits Manipulation")
 
         self.info_1 = QtWidgets.QLabel("info_1:", self)
         self.info_1.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
@@ -90,10 +90,13 @@ class ProtoFitsHeaders(QWidget):
 
     def func_1(self):
         pass
+
     def func_2(self):
         pass
+
     def func_3(self):
         pass
+
     def func_4(self):
         pass
 
