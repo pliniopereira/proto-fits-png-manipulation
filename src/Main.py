@@ -1,11 +1,11 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import sys
 
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QGroupBox, QMessageBox
 
+from src.controller import Fits
+from src.controller import Png
 from src.layout.Layout import set_hbox, set_lvbox
 
 
@@ -17,10 +17,15 @@ class ProtoFitsHeaders(QWidget):
         self.info_2 = None
         self.info_3 = None
 
-        self.btn_1 = None
-        self.btn_2 = None
-        self.btn_3 = None
+        self.btn_select_image = None
+        self.btn_show_info_png = None
+        self.btn_show_info_fits = None
         self.btn_4 = None
+
+        self.lImagesName = None
+        self.eImagesName = None
+
+        self.image_name = None
 
         self.init_ui()
 
@@ -36,29 +41,34 @@ class ProtoFitsHeaders(QWidget):
         self.show()
 
     def create_group(self):
-        group_box = QGroupBox("&Fits Manipulation")
+        group_box = QGroupBox("&Fits and Png Manipulation")
 
-        self.info_1 = QtWidgets.QLabel("info_1:", self)
-        self.info_1.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.info_1 = QtWidgets.QLabel("info_1", self)
+        self.info_1.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignLeft)
 
-        self.info_2 = QtWidgets.QLabel('info_2:', self)
-        
+        self.info_2 = QtWidgets.QLabel('info_2', self)
+        self.info_2.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignCenter)
+
         self.info_3 = QtWidgets.QLabel("info_3")
-        self.info_3.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
-        self.info_3.setMinimumWidth(60)
+        self.info_3.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignRight)
 
-        self.btn_1 = QtWidgets.QPushButton('btn_1', self)
+        self.lImagesName = QtWidgets.QLabel('Images Path:')
+        self.eImagesName = QtWidgets.QLineEdit(self)
+        self.eImagesName.setMinimumWidth(200)
 
-        self.btn_2 = QtWidgets.QPushButton('btn_2', self)
+        self.btn_select_image = QtWidgets.QPushButton('Open Image', self)
 
-        self.btn_3 = QtWidgets.QPushButton('btn_3', self)
+        self.btn_show_info_png = QtWidgets.QPushButton('Show Infos Png', self)
+
+        self.btn_show_info_fits = QtWidgets.QPushButton('Show Infos Fits', self)
         self.btn_4 = QtWidgets.QPushButton('btn_4', self)
 
         group_box.setLayout(set_lvbox(set_hbox(self.info_1),
-                                      set_hbox(self.info_2, self.info_3, stretch2=1),
-                                      set_hbox(self.btn_1),
-                                      set_hbox(self.btn_2),
-                                      set_hbox(self.btn_3),
+                                      set_hbox(self.info_2),
+                                      set_hbox(self.info_3),
+                                      set_hbox(self.lImagesName, self.eImagesName, self.btn_select_image),
+                                      set_hbox(self.btn_show_info_png),
+                                      set_hbox(self.btn_show_info_fits),
                                       set_hbox(self.btn_4)))
         return group_box
 
@@ -82,20 +92,26 @@ class ProtoFitsHeaders(QWidget):
         self.set_combo.addItem("6", 6)
 
     def button_settings(self):
-        self.btn_1.clicked.connect(self.func_1)
-        self.btn_2.clicked.connect(self.func_2)
+        self.btn_select_image.clicked.connect(self.open_image)
+        self.btn_show_info_png.clicked.connect(self.show_info_headers)
 
-        self.btn_3.clicked.connect(self.func_3)
+        self.btn_show_info_fits.clicked.connect(self.func_3)
         self.btn_4.clicked.connect(self.func_4)
 
-    def func_1(self):
-        pass
+    def open_image(self):
+        try:
+            image_name = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Image')
+            image_name = str(image_name[0])
+            self.eImagesName.setText(image_name)
+            self.image_name = image_name
+        except Exception as e:
+            print(e)
 
-    def func_2(self):
-        pass
+    def show_info_headers(self):
+        Png.return_info(self.image_name)
 
     def func_3(self):
-        pass
+        Fits.return_info(self.image_name)
 
     def func_4(self):
         pass
