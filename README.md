@@ -1,4 +1,4 @@
-# Protótipo para manipulação de cabecalhos no arquivo fits
+# Protótipo para manipulação de cabecalhos dos formatos fits e png
 
 ## License
 
