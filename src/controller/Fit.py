@@ -6,10 +6,10 @@ def set_headers(file_name):
     try:
         image = pyfits.open(file_name)
         prihdr = image[0].header
-        prihdr['DPI'] = '000' # ???
+        prihdr['DPI'] = '000'  # ???
         prihdr['BINNING'] = '000'
-        prihdr['BIT-DEP'] = '000' # ???
-        prihdr['CCD-GAIN'] = '000' # ???
+        prihdr['BIT-DEP'] = '000'  # ???
+        prihdr['CCD-GAIN'] = '000'  # ???
         prihdr['CCD-TEMP'] = '000'
         prihdr['CCDSTEMP'] = '000'
         prihdr['CCDTYPE'] = '000'
@@ -24,7 +24,7 @@ def set_headers(file_name):
         prihdr['LONGITUD'] = '000'
         prihdr['MO-ELEV'] = '000'
         prihdr['MO-PHASE'] = '000'
-        prihdr['R-SPEED'] = '000' # ???
+        prihdr['R-SPEED'] = '000'  # ???
         prihdr['SHTRCCD'] = '000'
         prihdr['SHTRLENZ'] = '000'
         prihdr['SITE-ID'] = '000'
