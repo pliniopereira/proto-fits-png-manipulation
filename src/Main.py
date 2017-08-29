@@ -114,7 +114,7 @@ class ProtoFitHeaders(QWidget):
         if self.image_name[-3:] == 'png':
             Png.return_info(self.image_name)
         else:
-            Fit.return_info(self.image_name)
+            Fit.set_headers(self.image_name)
             
     def func_3(self):
         pass
